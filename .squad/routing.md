@@ -6,36 +6,42 @@ How to decide who handles what.
 
 | Work Type | Route To | Examples |
 |-----------|----------|----------|
-| Triage, coordination, multi-domain issues, active incidents | Konrad | Severity, ownership, incident coordination, cross-domain synthesis |
-| Azure SRE, compute, identity, policy, root cause | Talos | AKS, App Service, Functions, VMs, quotas, Azure Policy, Entra ID, RBAC, Key Vault |
-| Delivery engineering and failures | Talos | Azure Pipelines, GitHub Actions, agents, runners, service connections, OIDC, artifacts, deployments |
-| Azure networking and connectivity | Octavia | VNets, peering, DNS, Private Link, firewalls, gateways, Front Door, connectivity |
-| Azure data platforms and integrity | Variel | Databases, Redis, Storage, replication, backups, restores, migrations, data integrity |
-| Azure observability | Cyrion | Azure Monitor, KQL, Application Insights, alerts, dashboards, SLOs |
-| Incident and operational documentation | Septimus | Timelines, updates, postmortems, runbooks, Azure Boards items, GitHub issues |
-| Independent review and challenge | Sevatar | Pull request review, security checks, test plans, go/no-go, root-cause challenges |
+| Triage and incident | Triage and Incident Commander | Issue triage, incident coordination, evidence prioritization |
+| Network and storage | Network and Storage Defender | NSG, Firewall, Private Link, storage security |
+| Identity and RBAC | Identity and RBAC Auditor | Entra ID, PIM, role assignments, least privilege |
+| Azure Policy, FinOps, and NIST CSF | Policy and FinOps Controller | Azure Policy, budgets, cost controls, NIST CSF mappings |
+| Terraform and GitHub Actions | IaC and CI/CD Inspector | Terraform review, workflow security, CI/CD guardrails |
+| Evidence verification | Independent Evidence Verifier | Independent confirmation, rejection, and final sign-off |
+
+Preset installation adds concrete routes for the configured team. Add or edit rows
+here only when their agent names also exist in the casting registry.
 
 ## Issue Routing
 
 | Label | Action | Who |
 |-------|--------|-----|
-| `squad` | Triage: analyze issue, assign `squad:{member}` label | Konrad |
+| `squad` | Triage: analyze issue, assign `squad:{member}` label | Lead |
 | `squad:{name}` | Pick up issue and complete the work | Named member |
+| `squad:triage-and-incident-commander` | Triage and incident work | Triage and Incident Commander |
+| `squad:network-and-storage-defender` | Network and storage work | Network and Storage Defender |
+| `squad:identity-and-rbac-auditor` | Identity and RBAC work | Identity and RBAC Auditor |
+| `squad:policy-and-finops-controller` | Azure Policy, FinOps, or NIST CSF work | Policy and FinOps Controller |
+| `squad:iac-and-cicd-inspector` | Terraform or GitHub Actions work | IaC and CI/CD Inspector |
+| `squad:independent-evidence-verifier` | Independent evidence verification | Independent Evidence Verifier |
 
 ### How Issue Assignment Works
 
-1. When a GitHub issue gets the `squad` label, **Konrad** coordinates triage and assigns the right `squad:{member}` label.
+1. When a GitHub issue gets the `squad` label, the **Lead** triages it — analyzing content, assigning the right `squad:{member}` label, and commenting with triage notes.
 2. When a `squad:{member}` label is applied, that member picks up the issue in their next session.
 3. Members can reassign by removing their label and adding another member's label.
-4. The `squad` label is the "inbox" — untriaged issues waiting for Konrad's coordination.
+4. The `squad` label is the "inbox" — untriaged issues waiting for Lead review.
 
 ## Rules
 
-1. Konrad owns triage and coordination; the named specialist owns technical work in their domain.
-2. At active incident start, Konrad engages Talos and Cyrion first and Septimus from the start. Add Octavia or Variel when evidence indicates their domain.
-3. Sevatar independently reviews the proposed root cause and remediation before incident work is called complete. Sevatar does not review their own work.
-4. Route one accountable owner per outcome. Add collaborators only for a bounded need; do not launch speculative downstream work.
-5. Scribe runs in the background after substantial work when durable decisions require merging; Scribe does not block specialist work.
-6. Quick factual questions may be answered directly when evidence is sufficient.
-7. When a `squad:{member}` label is applied, route to that member. Konrad coordinates triage for the base `squad` label.
-8. Production work follows the approved pull-request and deployment path. Sevatar reviews checks and evidence; the human lead gives final approval before deployment.
+1. **Eager by default** — spawn all agents who could usefully start work, including anticipatory downstream work.
+2. **Scribe always runs** after substantial work, always as `mode: "background"`. Never blocks.
+3. **Quick facts → coordinator answers directly.** Don't spawn an agent for "what port does the server run on?"
+4. **When two agents could handle it**, pick the one whose domain is the primary concern.
+5. **"Team, ..." → fan-out.** Spawn all relevant agents in parallel as `mode: "background"`.
+6. **Anticipate downstream work.** If a feature is being built, spawn the tester to write test cases from requirements simultaneously.
+7. **Issue-labeled work** — when a `squad:{member}` label is applied to an issue, route to that member. The Lead handles all `squad` (base label) triage.

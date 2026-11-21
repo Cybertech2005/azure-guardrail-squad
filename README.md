@@ -1,52 +1,28 @@
-# Night Lords Squad: AI SRE and DevOps Team for Azure
+# Azure Guardrail Squad
 
-An AI-powered SRE and DevOps team built with [GitHub Copilot CLI](https://github.com/features/copilot) and [Squad](https://github.com/bradygaster/squad). Squad turns Copilot into a team of specialized AI agents, each with a defined role, routing rules, and shared guardrails, modeled on how real SRE teams run incident response across Microsoft Azure, Azure DevOps, and GitHub.
+An AI-powered Cloud Security, Governance, and DevSecOps review team built with GitHub Copilot CLI and Squad. **Azure Guardrail Squad** reviews live Azure environments (via a Reader-only Azure MCP Server connection), Terraform code, and GitHub Actions pipelines to find security, access, and cost gaps.
 
-## The team
+## Members
 
-| Agent | Role | Focus |
-|---|---|---|
-| Konrad | Lead Orchestrator | Triage, delegation, incident timeline |
-| Talos | Azure SRE and Delivery Lead | Root cause, AKS, App Service, pipelines, deployments |
-| Octavia | Azure Network Engineer | VNets, DNS, firewalls, Private Link, connectivity |
-| Variel | Azure Data Engineer | Databases, backups, replication, data safety |
-| Cyrion | Azure Observability Engineer | Azure Monitor, KQL, alerts, SLOs |
-| Septimus | Incident Documentation Lead | Timelines, postmortems, work items |
-| Sevatar | Independent QA and Reviewer | Verifies diagnoses and changes before sign-off |
+1. **Triage and Incident Commander:** Takes each request, sends it to the right specialists, and combines their findings into one clean report.
+2. **Network and Storage Defender:** Reviews VNets, subnets, NSGs, and storage accounts for open ports (such as RDP or SSH open to `0.0.0.0/0`) and public blob exposure.
+3. **Identity and RBAC Auditor:** Reviews who has access. Flags leftover access keys, overly broad roles, and missing managed identities.
+4. **Policy and FinOps Controller:** Reviews Azure Policy, budgets, and expensive running resources, and maps controls to NIST CSF.
+5. **IaC and CI/CD Inspector:** Reviews Terraform code and GitHub Actions pipelines for mistakes (such as unencrypted disks) before deployment.
+6. **Independent Evidence Verifier:** Checks every finding against real evidence before sign-off, and never reviews its own work. The lead cannot override a rejection.
 
-## Guardrails
+## Shared Guardrails
 
-Every agent follows shared rules defined in `.squad/decisions.md`:
+- A human makes every decision. Default to read-only analysis.
+- Azure access comes only through the MCP connection, which uses a **Reader-only identity**. Never attempt to create, change, or delete anything.
+- Ask for explicit human approval before any change of any kind.
+- Never print or store secrets, access keys, real IP addresses, subscription IDs, or emails. Redact them.
+- Label every claim **Confirmed**, **Likely**, or **Unknown**. Do not invent details. If something cannot be read through MCP, mark it **Unknown**.
+- Report each finding as: **what I found**, **evidence**, **severity**, **suggested fix**.
 
-- A human is the final authority on every decision
-- Agents default to read-only investigation
-- Explicit human approval is required before any production change
-- No merging pull requests, bypassing checks, or exposing secrets
-- The reviewer cannot review its own work, and the lead agent cannot override a rejection
-- Every claim is labeled Confirmed, Likely, or Unknown, and agents never invent details they cannot verify
+## Setup & Usage
 
-## Repository structure
-
-| Path | Purpose |
-|---|---|
-| `.squad/team.md` | Team roster |
-| `.squad/routing.md` | Which agent handles which kind of work |
-| `.squad/decisions.md` | Shared rules and guardrails |
-| `.squad/agents/` | Each agent's charter (role) and history (memory) |
-| `.github/agents/squad.agent.md` | Lets Copilot load the team |
-| `.github/workflows/` | Squad automations that run on GitHub |
-
-## Setup
-
-Works on Windows and macOS.
-
-1. Install the prerequisites: Git, Node.js 22+, GitHub CLI, PowerShell 7
-   - Windows: `winget`
-   - macOS: `brew`
-2. Install the tools: `npm install -g @github/copilot @bradygaster/squad-cli`
-3. Sign in: `gh auth login`
-4. Start the team: `copilot --agent squad`
-
-## Status
-
-Demo environment. No live Azure environment is connected, so environment details are marked Unknown by design.
+1. Authenticate GitHub and a Reader-scoped Azure identity:
+   ```bash
+   gh auth login
+   az login

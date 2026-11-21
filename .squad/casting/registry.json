@@ -1,79 +1,67 @@
 {
   "schema": "squad-agent-provenance/v1",
   "schema_version": 1,
-  "revision": 2,
-  "generated_at": "2026-11-09T14:35:27.053-05:00",
+  "revision": 1,
+  "generated_at": "2026-11-20T21:53:53.289-05:00",
+  "created_at": "2026-11-20T21:53:53.289-05:00",
   "agents": {
-    "konrad": {
-      "display_name": "Konrad",
-      "persistent_name": "Konrad",
-      "role": "Lead Orchestrator",
-      "universe": "Warhammer 40,000: Night Lords",
-      "created_at": "2026-11-09T14:35:27.053-05:00",
-      "updated_at": "2026-11-09T14:35:27.053-05:00",
+    "triage-and-incident-commander": {
+      "persistent_name": "Triage and Incident Commander",
+      "universe": "descriptive",
       "legacy_named": false,
       "status": "active"
     },
-    "talos": {
-      "display_name": "Talos",
-      "persistent_name": "Talos",
-      "role": "Azure SRE and Delivery Lead",
-      "universe": "Warhammer 40,000: Night Lords",
-      "created_at": "2026-11-09T14:35:27.053-05:00",
-      "updated_at": "2026-11-09T14:35:27.053-05:00",
+    "network-and-storage-defender": {
+      "persistent_name": "Network and Storage Defender",
+      "universe": "descriptive",
       "legacy_named": false,
       "status": "active"
     },
-    "octavia": {
-      "display_name": "Octavia",
-      "persistent_name": "Octavia",
-      "role": "Azure Network Engineer",
-      "universe": "Warhammer 40,000: Night Lords",
-      "created_at": "2026-11-09T14:35:27.053-05:00",
-      "updated_at": "2026-11-09T14:35:27.053-05:00",
+    "identity-and-rbac-auditor": {
+      "persistent_name": "Identity and RBAC Auditor",
+      "universe": "descriptive",
       "legacy_named": false,
       "status": "active"
     },
-    "variel": {
-      "display_name": "Variel",
-      "persistent_name": "Variel",
-      "role": "Azure Data Engineer",
-      "universe": "Warhammer 40,000: Night Lords",
-      "created_at": "2026-11-09T14:35:27.053-05:00",
-      "updated_at": "2026-11-09T14:35:27.053-05:00",
+    "policy-and-finops-controller": {
+      "persistent_name": "Policy and FinOps Controller",
+      "universe": "descriptive",
       "legacy_named": false,
       "status": "active"
     },
-    "cyrion": {
-      "display_name": "Cyrion",
-      "persistent_name": "Cyrion",
-      "role": "Azure Observability Engineer",
-      "universe": "Warhammer 40,000: Night Lords",
-      "created_at": "2026-11-09T14:35:27.053-05:00",
-      "updated_at": "2026-11-09T14:35:27.053-05:00",
+    "iac-and-cicd-inspector": {
+      "persistent_name": "IaC and CI/CD Inspector",
+      "universe": "descriptive",
       "legacy_named": false,
       "status": "active"
     },
-    "septimus": {
-      "display_name": "Septimus",
-      "persistent_name": "Septimus",
-      "role": "Incident Documentation Lead",
-      "universe": "Warhammer 40,000: Night Lords",
-      "created_at": "2026-11-09T14:35:27.053-05:00",
-      "updated_at": "2026-11-09T14:35:27.053-05:00",
+    "independent-evidence-verifier": {
+      "persistent_name": "Independent Evidence Verifier",
+      "universe": "descriptive",
       "legacy_named": false,
       "status": "active"
     },
-    "sevatar": {
-      "display_name": "Sevatar",
-      "persistent_name": "Sevatar",
-      "role": "Independent QA and Reviewer",
-      "universe": "Warhammer 40,000: Night Lords",
-      "created_at": "2026-11-09T14:35:27.053-05:00",
-      "updated_at": "2026-11-09T14:35:27.053-05:00",
+    "scribe": {
+      "persistent_name": "Scribe",
+      "universe": "descriptive",
       "legacy_named": false,
-      "status": "active"
+      "status": "active",
+      "built_in": true
+    },
+    "ralph": {
+      "persistent_name": "Ralph",
+      "universe": "descriptive",
+      "legacy_named": false,
+      "status": "active",
+      "built_in": true
+    },
+    "rai": {
+      "persistent_name": "Rai",
+      "universe": "descriptive",
+      "legacy_named": false,
+      "status": "active",
+      "built_in": true
     }
   },
-  "transaction_id": "7ed09580-a419-46c0-8645-e0a6abc28981"
+  "transaction_id": "b6a54442-0f3a-422b-a769-147c224c7c20"
 }
