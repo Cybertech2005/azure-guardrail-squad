@@ -1,6 +1,6 @@
 # Azure Guardrail Squad
 
-An AI-powered Cloud Security, Governance, and DevSecOps review team built with GitHub Copilot CLI and Squad. **Azure Guardrail Squad** reviews live Azure environments (via a Reader-only Azure MCP Server connection), Terraform code, and GitHub Actions pipelines to find security, access, and cost gaps.
+An AI-powered Cloud Security, Governance, and DevSecOps review team built with GitHub Copilot CLI and Squad. **Azure Guardrail Squad** reviews Terraform code and GitHub Actions pipelines, and can review live Azure environments once an Azure MCP Server with a Reader-only identity is connected, to find security, access, and cost gaps.
 
 ## Members
 
@@ -11,6 +11,8 @@ An AI-powered Cloud Security, Governance, and DevSecOps review team built with G
 5. **IaC and CI/CD Inspector:** Reviews Terraform code and GitHub Actions pipelines for mistakes (such as unencrypted disks) before deployment.
 6. **Independent Evidence Verifier:** Checks every finding against real evidence before sign-off, and never reviews its own work. The lead cannot override a rejection.
 
+Squad also adds its own built-in helper agents (such as Scribe and Ralph).
+
 ## Shared Guardrails
 
 - A human makes every decision. Default to read-only analysis.
@@ -20,9 +22,34 @@ An AI-powered Cloud Security, Governance, and DevSecOps review team built with G
 - Label every claim **Confirmed**, **Likely**, or **Unknown**. Do not invent details. If something cannot be read through MCP, mark it **Unknown**.
 - Report each finding as: **what I found**, **evidence**, **severity**, **suggested fix**.
 
+## Repository Structure
+
+| Path | Purpose |
+|---|---|
+| `.squad/team.md` | Team roster |
+| `.squad/routing.md` | Which agent handles which kind of work |
+| `.squad/decisions.md` | Shared guardrails and sign-off rules |
+| `.squad/agents/` | Each agent's charter (role) and history (memory) |
+| `.github/agents/squad.agent.md` | Loads the team in GitHub Copilot CLI |
+| `.github/workflows/iac-security.yml` | GitHub Actions pipeline: Terraform format check and validate on pull requests |
+| `infra/main.tf` | Sample Terraform for pre-deployment reviews |
+
 ## Setup & Usage
 
 1. Authenticate GitHub and a Reader-scoped Azure identity:
    ```bash
    gh auth login
    az login
+   ```
+2. Install Copilot CLI and Squad:
+   ```bash
+   npm install -g @github/copilot @bradygaster/squad-cli
+   ```
+3. Start the team:
+   ```bash
+   copilot --agent squad
+   ```
+
+## Status
+
+Demo project. The agents work on the Terraform code and pipelines in this repo. Reviewing a live Azure environment requires connecting an Azure MCP Server with a Reader-only identity, which is not included in this repo. Without it, anything the agents cannot read is marked Unknown.
