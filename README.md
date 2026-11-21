@@ -2,6 +2,10 @@
 
 An AI-powered Cloud Security, Governance, and DevSecOps review team built with GitHub Copilot CLI and Squad. **Azure Guardrail Squad** reviews Terraform code and GitHub Actions pipelines, and can review live Azure environments once an Azure MCP Server with a Reader-only identity is connected, to find security, access, and cost gaps.
 
+## Walkthrough
+
+[![Click here for walkthrough](https://img.shields.io/badge/▶%20Click%20here%20for%20walkthrough-625DF5?style=for-the-badge&logo=loom&logoColor=white)](https://www.loom.com/share/8980a46bff5e4a2b8421b45a2d26276e)
+
 ## Members
 
 1. **Triage and Incident Commander:** Takes each request, sends it to the right specialists, and combines their findings into one clean report.
